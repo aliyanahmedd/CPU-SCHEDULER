@@ -1,35 +1,39 @@
 @echo off
 REM Quick run script for CPU Scheduler Visualizer
 
+REM Ensure running from script directory
+pushd "%~dp0"
+
 echo Starting CPU Scheduler Visualizer...
 echo.
 
-REM Prefer project wrapper (mvnw), then mvnd, then mvn
-where mvnw.cmd >nul 2>&1
-if %errorlevel% equ 0 (
-    call mvnw.cmd javafx:run
-) else (
-    where mvnd >nul 2>&1
-    if %errorlevel% equ 0 (
-        call mvnd javafx:run
-    ) else (
-        where mvn >nul 2>&1
-        if %errorlevel% equ 0 (
-            call mvn javafx:run
-        ) else (
-            echo ERROR: No Maven runtime found (mvnw, mvnd, or mvn).
-            echo The included wrapper will download Maven automatically when run.
-            echo Try: mvnw.cmd javafx:run
-            pause
-            exit /b 1
-        )
-    )
+REM Prefer local Maven wrapper (mvnw.cmd), then mvnd, then mvn
+if exist "%~dp0mvnw.cmd" (
+    call "%~dp0mvnw.cmd" javafx:run %*
+    set rc=%ERRORLEVEL%
+    popd
+    exit /b %rc%
 )
 
-if %errorlevel% neq 0 (
-    echo.
-    echo ERROR: Failed to run application.
-    echo Please ensure Maven and Java are installed correctly.
-    pause
-    exit /b 1
+where mvnd >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    mvnd javafx:run %*
+    set rc=%ERRORLEVEL%
+    popd
+    exit /b %rc%
 )
+
+where mvn >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    mvn javafx:run %*
+    set rc=%ERRORLEVEL%
+    popd
+    exit /b %rc%
+)
+
+echo ERROR: No Maven runtime found (mvnw.cmd, mvnd, or mvn).
+echo The included wrapper will download Maven automatically when run.
+echo Try running: mvnw.cmd javafx:run
+pause
+popd
+exit /b 1
