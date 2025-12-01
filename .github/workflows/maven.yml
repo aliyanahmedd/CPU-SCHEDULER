@@ -14,6 +14,9 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Ensure wrapper is executable (CI safety)
+      run: chmod +x mvnw || true
+
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
