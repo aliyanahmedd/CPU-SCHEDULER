@@ -67,8 +67,9 @@ public class GanttView extends BorderPane {
         int maxTime = segments.get(segments.size() - 1).getEnd();
         chartPane.setPrefWidth(maxTime * SCALE + 50);
 
-        // Draw time scale
-        for (int t = 0; t <= maxTime; t++) {
+        // Draw time scale with dynamic intervals to avoid rendering too many ticks
+        int tickInterval = calculateTickInterval(maxTime);
+        for (int t = 0; t <= maxTime; t += tickInterval) {
             Line tick = new Line(t * SCALE, BAR_HEIGHT, t * SCALE, BAR_HEIGHT + 10);
             tick.getStyleClass().add("time-tick");
             chartPane.getChildren().add(tick);
@@ -187,5 +188,19 @@ public class GanttView extends BorderPane {
      */
     public void setOnSegmentClick(Consumer<Integer> callback) {
         this.onSegmentClick = callback;
+    }
+
+    /**
+     * Calculate appropriate tick interval based on max time to avoid rendering too many ticks.
+     * Ensures reasonable number of ticks regardless of timescale.
+     */
+    private int calculateTickInterval(int maxTime) {
+        if (maxTime <= 20) return 1;
+        if (maxTime <= 100) return 5;
+        if (maxTime <= 500) return 10;
+        if (maxTime <= 1000) return 50;
+        if (maxTime <= 5000) return 100;
+        if (maxTime <= 10000) return 500;
+        return 1000;
     }
 }
