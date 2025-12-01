@@ -16,10 +16,7 @@ jobs:
 
     - name: Ensure wrapper is executable (CI safety)
       run: |
-        echo "Before chmod:"; ls -l mvnw || true
-        echo "File head:"; head -n 2 mvnw || true
         chmod +x mvnw || true
-        echo "After chmod:"; ls -l mvnw || true
 
     - name: Set up JDK 21
       uses: actions/setup-java@v4
@@ -30,15 +27,8 @@ jobs:
 
     - name: Build (try wrapper, fallback to system Maven)
       run: |
-        set -eux
-        echo "Runner info:"; uname -a
-        echo "Whoami:"; whoami
-        echo "Before chmod:"; ls -l mvnw || true
-        chmod +x mvnw || true
-        echo "After chmod:"; ls -l mvnw || true
-        echo "File head:"; head -n 4 mvnw || true
-        echo "Attempting to run wrapper (bash -x mvnw)";
-        if bash -x mvnw -DskipTests -B clean package; then
+        set -euo pipefail
+        if bash mvnw -DskipTests -B clean package; then
           echo "Build succeeded with mvnw"
         else
           echo "Wrapper failed — installing system Maven and retrying"
