@@ -15,7 +15,11 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Ensure wrapper is executable (CI safety)
-      run: chmod +x mvnw || true
+      run: |
+        echo "Before chmod:"; ls -l mvnw || true
+        echo "File head:"; head -n 2 mvnw || true
+        chmod +x mvnw || true
+        echo "After chmod:"; ls -l mvnw || true
 
     - name: Set up JDK 21
       uses: actions/setup-java@v4
@@ -24,5 +28,10 @@ jobs:
         java-version: '21'
         cache: 'maven'
 
-    - name: Run Maven package (wrapper)
-      run: ./mvnw -DskipTests -B clean package
+    - name: Debug wrapper and run Maven (wrapper)
+      run: |
+        echo "Runner info:"; uname -a
+        echo "Whoami:"; whoami
+        echo "mvnw permissions:"; ls -l mvnw
+        echo "Running mvnw -v"; ./mvnw -v || true
+        echo "Now running build"; ./mvnw -DskipTests -B clean package
