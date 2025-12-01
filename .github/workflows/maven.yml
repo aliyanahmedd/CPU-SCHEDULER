@@ -28,10 +28,21 @@ jobs:
         java-version: '21'
         cache: 'maven'
 
-    - name: Debug wrapper and run Maven (wrapper)
+    - name: Build (try wrapper, fallback to system Maven)
       run: |
+        set -eux
         echo "Runner info:"; uname -a
         echo "Whoami:"; whoami
-        echo "mvnw permissions:"; ls -l mvnw
-        echo "Running mvnw -v"; bash mvnw -v || true
-        echo "Now running build"; bash mvnw -DskipTests -B clean package
+        echo "Before chmod:"; ls -l mvnw || true
+        chmod +x mvnw || true
+        echo "After chmod:"; ls -l mvnw || true
+        echo "File head:"; head -n 4 mvnw || true
+        echo "Attempting to run wrapper (bash -x mvnw)";
+        if bash -x mvnw -DskipTests -B clean package; then
+          echo "Build succeeded with mvnw"
+        else
+          echo "Wrapper failed — installing system Maven and retrying"
+          sudo apt-get update -y
+          sudo apt-get install -y maven
+          mvn -DskipTests -B clean package
+        fi
