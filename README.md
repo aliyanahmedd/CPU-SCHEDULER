@@ -12,6 +12,8 @@ An interactive desktop application built with Java and JavaFX that visualizes CP
 - **SJF (Shortest Job First)** — Non-preemptive scheduling based on burst time
 # CPU Scheduler Visualizer
 
+![CI](https://github.com/aliyanahmedd/CPU-SCHEDULER/actions/workflows/maven.yml/badge.svg)
+
 An interactive desktop application (Java + JavaFX) that visualizes CPU scheduling algorithms.
 
 ## Quick start (one-command)
@@ -26,7 +28,12 @@ java -jar target\cpu-scheduler-1.0.0-shaded.jar
 
 Notes:
 - The repository includes the Maven wrapper (`mvnw`, `mvnw.cmd`) so you don't need Maven preinstalled.
-- The build produces a shaded (uber) JAR: `target/cpu-scheduler-1.0.0-shaded.jar`.
+- The build produces a runnable JAR in the `target/` directory (example: `cpu-scheduler-1.0.0.jar`; some setups may produce a `*-shaded.jar`).
+	Run the produced JAR, for example:
+
+```powershell
+java -jar target\cpu-scheduler-1.0.0.jar
+```
 
 If you prefer to run directly from Maven goals:
 
