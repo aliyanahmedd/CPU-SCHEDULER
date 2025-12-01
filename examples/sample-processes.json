@@ -1,0 +1,23 @@
+[
+  {
+    "id": "P1",
+    "arrival": 0,
+    "burst": 5,
+    "priority": 2,
+    "color": "#FF6B6B"
+  },
+  {
+    "id": "P2",
+    "arrival": 2,
+    "burst": 3,
+    "priority": 1,
+    "color": "#4ECDC4"
+  },
+  {
+    "id": "P3",
+    "arrival": 4,
+    "burst": 1,
+    "priority": 3,
+    "color": "#45B7D1"
+  }
+]

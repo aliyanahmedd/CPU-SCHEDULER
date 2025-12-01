@@ -1,0 +1,37 @@
+[
+  {
+    "id": "P1",
+    "arrival": 0,
+    "burst": 8,
+    "priority": 3,
+    "color": "#FF6B6B"
+  },
+  {
+    "id": "P2",
+    "arrival": 1,
+    "burst": 4,
+    "priority": 1,
+    "color": "#4ECDC4"
+  },
+  {
+    "id": "P3",
+    "arrival": 2,
+    "burst": 2,
+    "priority": 4,
+    "color": "#45B7D1"
+  },
+  {
+    "id": "P4",
+    "arrival": 3,
+    "burst": 1,
+    "priority": 2,
+    "color": "#FFA07A"
+  },
+  {
+    "id": "P5",
+    "arrival": 4,
+    "burst": 3,
+    "priority": 5,
+    "color": "#98D8C8"
+  }
+]
