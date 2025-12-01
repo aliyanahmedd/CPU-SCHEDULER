@@ -33,5 +33,5 @@ jobs:
         echo "Runner info:"; uname -a
         echo "Whoami:"; whoami
         echo "mvnw permissions:"; ls -l mvnw
-        echo "Running mvnw -v"; ./mvnw -v || true
-        echo "Now running build"; ./mvnw -DskipTests -B clean package
+        echo "Running mvnw -v"; bash mvnw -v || true
+        echo "Now running build"; bash mvnw -DskipTests -B clean package
